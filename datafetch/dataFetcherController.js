@@ -4,6 +4,8 @@ var theFetchedDate;
 var theFetchedPlayer;
 var allPlayers = [];
 var STATE_OF_APP = "online";
+var testing = false;
+var testDate = "2012-11-01";
 
 //if use of saved data change STATE_OF_FETCH_DATA to "loadsaved"
 
@@ -36,7 +38,12 @@ if (!Titanium.Network.online)
 				else
 				{
 					theFetchedDate = testSavedDate;
+					if(testing)
+					{
+							theFetchedDate = testDate;
+					}
 					theFetchedPlayer = JSON.parse(Ti.App.Properties.getString(theFetchedDate));
+					
 					allPlayers = Ti.App.Properties.getList('allPlayersSaved');
 					actInd.hide();
 					alert("You are not connected to internet, you will now enter the app in offline-mode.");
@@ -46,7 +53,16 @@ if (!Titanium.Network.online)
 			}
 			else
 			{
-				getToday();
+				if(testing)
+				{
+					theFetchedDate = testDate;
+					getTodaysPlayer(theFetchedDate);
+				}
+				else
+				{
+					getToday();
+				}
+				
 			}
 
 
